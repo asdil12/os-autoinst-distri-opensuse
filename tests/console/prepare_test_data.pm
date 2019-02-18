@@ -14,10 +14,12 @@ use base "consoletest";
 use testapi;
 use utils;
 use Utils::Backends 'use_ssh_serial_console';
+use known_bugs 'check_journal';
 use strict;
 use warnings;
 
 sub run {
+    check_journal (module => 'sshd');
     check_var("BACKEND", "ipmi") ? use_ssh_serial_console : select_console 'root-console';
 
     select_console 'user-console';
