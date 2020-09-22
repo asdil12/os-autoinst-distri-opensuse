@@ -34,11 +34,17 @@ sub run {
 
 sub post_fail_hook {
     my ($self) = @_;
+
+    send_key 'alt-sysrq-t';
+    send_key 'alt-sysrq-w';
+    send_key 'ret';
+
     select_console 'log-console';
     assert_script_run("lsblk -f");
     assert_script_run("df -h");
     assert_script_run("free -h");
     $self->save_and_upload_log('cat /tmp/file_copy_*.log', 'file_copy_all.log');
+
     $self->SUPER::post_fail_hook;
 }
 
